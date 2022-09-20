@@ -17,7 +17,7 @@ export default async function verifyToken(
     try {
         const data = jwt.verify(token, "g64s48g468dfg468d468g84zd468h468z68dt48h") as JwtPayload;
 
-        const user = await prisma.user.findFirst({
+        const user = await prisma.users.findFirst({
             where: {
                 email: data.email,
             },

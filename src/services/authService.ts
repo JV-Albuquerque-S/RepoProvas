@@ -9,7 +9,7 @@ import { CreateUserData } from '../repositories/userRepositories';
 
 export async function signIn(userData: CreateUserData){
     const user = await userRepository.findUserByEmail(userData.email);
-    if(!user) throw {status: 404, message: "Invalid credentials"};
+    if(!user) throw {status: 401, message: "Invalid credentials teste"};
     const validPassword = bcrypt.compareSync(userData.password, user.password);
     if(!validPassword) throw {status: 401, message:"Invalid credentials"}
     //
