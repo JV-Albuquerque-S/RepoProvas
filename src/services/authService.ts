@@ -11,7 +11,7 @@ export async function signIn(userData: CreateUserData){
     const user = await userRepository.findUserByEmail(userData.email);
     if(!user) throw {status: 404, message: "Invalid credentials"};
     const validPassword = bcrypt.compareSync(userData.password, user.password);
-    if(!validPassword) throw {status: 401,message:"Invalid credentials"}
+    if(!validPassword) throw {status: 401, message:"Invalid credentials"}
     //
     // --------- FALAR COM ADRIANO SOBRE O ERRO DO JWT ------------
     //
