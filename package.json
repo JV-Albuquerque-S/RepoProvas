@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node build/src/index.ts",
     "dev": "nodemon src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "dotenv -e .env.test prisma migrate dev && dotenv -e .env.test prisma db seed && NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -i"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.7.18",
     "@types/supertest": "^2.0.12",
+    "faker": "^6.6.6",
     "jest": "^29.0.3",
     "nodemon": "^2.0.19",
     "supertest": "^6.2.4",
@@ -33,10 +34,15 @@
     "chalk": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
+    "dotenv-cli": "^6.0.0",
     "express": "^4.18.1",
     "express-async-errors": "^3.1.1",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "prisma": "^4.3.1"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma",
+    "seed": "ts-node prisma/seed.ts"
   }
 }
