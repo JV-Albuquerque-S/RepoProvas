@@ -47,9 +47,12 @@ describe("POST /tests", () => {
             confirmPassword:"12345"
         };
 
+        const token = {authorization: ""};
+
         await supertest(app).post("/sign-up").send(registerBody);
-        const token = (await supertest(app).post("/sign-in").send(loginBody)).body.token;
-        console.log(token);
+        const auth = (await supertest(app).post("/sign-in").send(loginBody));
+        token.authorization = auth.body.token;
+        //console.log(token);
 
         const body = {
             name: "CSS Test",
@@ -75,9 +78,16 @@ describe("POST /tests", () => {
             confirmPassword:"12345"
         };
 
+        const token = {authorization: ""};
+
         await supertest(app).post("/sign-up").send(registerBody);
-        const token = (await supertest(app).post("/sign-in").send(loginBody)).body.token;
-        console.log(token);
+        const auth = (await supertest(app).post("/sign-in").send(loginBody));
+        token.authorization = auth.body.token;
+        //console.log(token);
+        const a = JSON.stringify(token);
+        console.log(`token com .toString aqui ó: ${typeof token.toString()}`);
+        console.log(`token com stringify aqui ó: ${typeof a}`);
+        console.log(`token puro aqui ó: ${typeof token}`);
 
         const body = {
             name: "CSS Test",
@@ -103,9 +113,12 @@ describe("POST /tests", () => {
             confirmPassword:"12345"
         };
 
+        const token = {authorization: ""};
+
         await supertest(app).post("/sign-up").send(registerBody);
-        const token = (await supertest(app).post("/sign-in").send(loginBody)).body.token;
-        console.log(token);
+        const auth = (await supertest(app).post("/sign-in").send(loginBody));
+        token.authorization = auth.body.token;
+        //console.log(token);
 
         const body = {
             name: "CSS Test",
@@ -129,20 +142,25 @@ describe("POST /tests", () => {
             confirmPassword:"12345"
         };
 
+        const token = {authorization: ""};
+
         await supertest(app).post("/sign-up").send(registerBody);
-        const token = (await supertest(app).post("/sign-in").send(loginBody)).body.token;
-        console.log(token);
+        const auth = (await supertest(app).post("/sign-in").send(loginBody));
+        token.authorization = auth.body.token;
+        //console.log(token);
         
         const body = {
             name: "CSS Test",
             pdfUrl: "https://www.google.com/pdf",
             categoryId: 3,
             disciplineId: 2,
-            teacherId: 4,
+            teacherId: 1,
         };
         const response = await supertest(app).post("/tests").set(token).send(body);
         const status = response.status;
-        console.log("token aqui ó:"+typeof token);
+        console.log(response);
+        //const a = JSON.stringify(token);
+        //console.log(`token aqui ó: ${typeof token}`);
 
         expect(status).toEqual(201);
     });
