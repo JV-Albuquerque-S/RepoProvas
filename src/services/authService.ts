@@ -7,6 +7,8 @@ dotenv.config();
 import userRepository from '../repositories/userRepositories';
 import { CreateUserData } from '../repositories/userRepositories';
 
+const secret = process.env.JWT_SECRET || "g64s48g468dfg468d468g84zd468h468z68dt48h";
+
 export async function signIn(userData: CreateUserData){
     const user = await userRepository.findUserByEmail(userData.email);
     if(!user) throw {status: 401, message: "Invalid credentials teste"};
@@ -15,7 +17,7 @@ export async function signIn(userData: CreateUserData){
     //
     // --------- FALAR COM ADRIANO SOBRE O ERRO DO JWT ------------
     //
-    const token = jwt.sign({userId: user.id}, "g64s48g468dfg468d468g84zd468h468z68dt48h");
+    const token = jwt.sign({userId: user.id}, secret);
     return token;
 }
 
