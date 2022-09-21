@@ -6,7 +6,7 @@ beforeEach(async () => {
     await prisma.$executeRaw`TRUNCATE TABLE "users"`
 });
 
-describe("POST /auth/sign-up", () => {
+describe("POST /sign-up", () => {
     it("409 on email already registered", async () => {
         const body = {
             email: "abc@gmail.com",
@@ -47,7 +47,7 @@ describe("POST /auth/sign-up", () => {
     });
 });
 
-describe("POST /auth/sign-in", () => {
+describe("POST /sign-in", () => {
     it("422 on empty body", async () => {
         const response = await supertest(app).post("/sign-in").send({});
         const status = response.status;
@@ -70,13 +70,21 @@ describe("POST /auth/sign-in", () => {
     it("token on valid input", async () => {
         const body = {
             email: "abc@gmail.com",
-            password: "123"
+            password: "12345"
         };
 
+        const registerBody = {
+            email: "abc@gmail.com",
+            password: "12345",
+            confirmPassword:"12345"
+        };
+
+        await supertest(app).post("/sign-up").send(registerBody);
         const response = await supertest(app).post("/sign-in").send(body);
         const token = response.body.token;
 
-        expect(token).not.toBeNull();
+        expect(typeof token).toEqual("string");
+        expect(response.status).toEqual(200);
     });
 });
 
